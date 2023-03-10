@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { WebViewComponent } from './pages/web-view/web-view.component';
@@ -21,9 +24,6 @@ import { EducationsWebComponent } from './components/web-view-components/educati
 import { ExperiencesWebComponent } from './components/web-view-components/experiences-web/experiences-web.component';
 import { ProjectsWebComponent } from './components/web-view-components/projects-web/projects-web.component';
 import { UserAccountsWebComponent } from './components/web-view-components/user-accounts-web/user-accounts-web.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './pages/signin/login/login.component';
 import { SignupComponent } from './pages/signin/signup/signup/signup.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -61,13 +61,13 @@ import { CustombuttonComponent } from './components/custombutton/custombutton.co
     DashboardComponentsComponent,
     HrClientComponentsComponent,
     WebViewComponentsComponent,
-    CustombuttonComponent
+    CustombuttonComponent,
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
+    AppRoutingModule,
+    HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
   ],
