@@ -3,11 +3,11 @@ const cors = require('cors');
 const bcrypt = require('bcryptjs')
 const mongoose = require('mongoose');
 const router = require('./router');
-const app = express();
 const fileUpload = require('express-fileupload')
 const PORT = 3000;
 
 
+const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(router);
