@@ -1,0 +1,19 @@
+{
+  "name": "devport",
+  "version": "1.0.0",
+  "description": "Devport is a portfolio website for developers that aggregates the data form various sources(like github, stack-overflow etc.) and displays them in one place. It also allows HR people to take a look at developers' portfolios.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sajon5271/DevPort.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sajon5271/DevPort/issues"
+  },
+  "homepage": "https://github.com/Sajon5271/DevPort#readme"
+}
