@@ -1,37 +1,35 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const secret = 'shuhat3231';
-
+const secret = process.env.SECRET_KEY;
 
 const authMiddleware = async (req, res, next) => {
   const authHeaders = req.headers['authorization'];
-  console.log(req.headers['Authorization'])
   if (!authHeaders) {
     return res
-            .status(403)
-            .send("You are not authorized!");
+      .status(403)
+      .send({ error: '403', message: 'You are not authorized' });
   }
 
   const token = authHeaders.split(' ')[1];
   try {
     const { _id } = jwt.verify(token, secret);
     const user = await User.findOne({ _id });
-    if (user){
-      req.user = user;
+    if (user) {
+      req.currentUser = user;
       next();
     } else {
       return res
-              .status(401)
-              .send('You are not logged in!')
-    }
-  
-  } catch (error) {
-    if(error instanceof jwt.TokenExpiredError) {
-      res
         .status(401)
-        .send('Access token has expired.');
+        .send({ error: '401', message: 'Invalid JWT token' });
     }
-    res.status(500);
+  } catch (error) {
+    if (error instanceof jwt.TokenExpiredError) {
+      res.status(401).send({
+        error: '401',
+        message: 'Session expired, please log in again',
+      });
+    }
+    res.status(500).send({ error: '500', message: 'Something went wrong' });
   }
 };
 

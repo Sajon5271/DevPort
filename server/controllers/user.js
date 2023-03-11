@@ -1,122 +1,70 @@
-const Profile = require("../models/profile");
-const User = require("../models/user");
-const bcrypt = require('bcryptjs')
+const Profile = require('../models/profile');
+const User = require('../models/user');
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { response } = require("express");
-const secret = "shuhat3231"
 
+const secret = process.env.SECRET_KEY;
 
-async function postUser(req, res) {
-const email = ""
-    try {
-        console.log("postuser")
-        const salt = await bcrypt.genSalt(10)   
-        const hashedPassword = await bcrypt.hash(req.body.password, salt)
-        const existingUser = await User.findOne({ email: req.body.email });
-
-        if (existingUser){
-            console.log('Got an error in the register controller');
-            console.log("Existing User : ",existingUser);
-            return res
-                    .status(400)
-                    .send({ error: '401', message: 'User already exists' });
-        }
-        const user = new Profile({
-            basicInfo:{
-              email: req.body.email
-            }
-        })
-        const userPass = new User({
-            email: req.body.email,
-            password: hashedPassword
-        })
-        console.log("Reached to Line # 33")
-        await user.save()
-        console.log("Profile : ",user)
-        const registeredUser = await userPass.save()
-        console.log("User Id : ",registeredUser._id.toString());
-        const accessToken = jwt.sign({ _id: registeredUser._id.toString() }, secret, { expiresIn: "7d" });
-        console.log("AccessToken : ",accessToken)
-        res.setHeader("Authorization","Bearer "+accessToken)
-        res.status(200)
-        res.send({ code: '200', message: 'User Created Successfully !', userId: user._id.toString() })
-
-    } catch (error) {
-      console.log(error);
-      res.status(500);
-      res.send("Can't create users")
-    }
-
-  }
-
-//   async function loginUser(req,res){
-//     try{
-//         const user = await Profile.findOne({"basicInfo.email": req.body.email})
-//         const userPass = await User.findOne({email: req.body.email})
-//         console.log(user)
-//         if(!user){
-//             return res.status(404).send({
-//                 message: 'User not found'
-//             })
-//         }
-//         if(!await bcrypt.compare(req.body.password, userPass.password)){
-//             return res.status(400).send({
-//                 message: 'Invalid password'
-//             })
-//         }
-//         // const token = jwt.sign({_id:user_id}, "secret")
-//         // console.log(token)
-//         // res.send(token)
-//     }
-//     catch(error){
-//     res.status(500);
-//     console.log(error)
-//     }
-//   }
-
-async function loginUser (req, res){
+async function registerUser(req, res) {
   try {
-    console.log("into login route")
-    const { email, password } = req.body;
-    if (!email) {
-      res
-        .status(401)
-        .send("Invalid email!");
-    } else if (!password)  {
-      res
-        .status(401)
-        .send("Invalid password!");
-    } 
-    
-    const user = await User.findOne({ email: email }); 
-    const profileData = await Profile.find({ 'basicInfo.email': email }); 
-    if(user) {
+    const existingUser = await User.findOne({ email: req.body.email });
+    if (existingUser) {
+      return res
+        .status(409)
+        .send({ error: '409', message: 'User already exists' });
+    } else {
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      const newProfile = await Profile.create({});
+      const newUser = await User.create({
+        email: req.body.email,
+        password: hashedPassword,
+        profileId: newProfile._id,
+      });
+      const accessToken = jwt.sign({ _id: newUser._id }, secret, {
+        expiresIn: '7d',
+      });
+
+      res.status(201);
+      res.send({ accessToken });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500);
+    res.send({ error: '500', message: 'Something went wrong' });
+  }
+}
+
+async function loginUser(req, res) {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    res
+      .status(401)
+      .send({ error: '401', message: 'Invalid Email or Password' });
+    return;
+  }
+  try {
+    const user = await User.findOne({ email });
+    if (user) {
       const checkPass = await bcrypt.compare(password, user.password);
       if (checkPass) {
-        const accessToken = jwt.sign({ _id: user._id }, secret, { expiresIn: "7d" });
-        console.log(accessToken)
-        res
-          .setHeader("Authorization", "Bearer " + accessToken)
-          .status(200)
-          .send({ status: '200', message: 'Successfully LOGGED IN',user:profileData[0], token:  `Bearer ${accessToken}` });
+        const accessToken = jwt.sign({ _id: user._id }, secret, {
+          expiresIn: '7d',
+        });
+        res.status(200);
+        res.send({ accessToken });
       } else {
         res
           .status(401)
-          .send("Incorrect credentials.");
-    }
+          .send({ error: '401', message: 'Incorrect credentials.' });
+      }
     } else {
       res
         .status(403)
-        .send("You are not registered yet.");
+        .send({ error: '403', message: 'You are not registered yet' });
     }
-    
   } catch (error) {
-    res
-      .status(401)
-      .send({ error: '401', message: 'Incorrect username or password' });
+    res.status(500).send({ error: '500', message: 'Something went wrong' });
   }
-};
+}
 
-
-
-module.exports = { postUser,loginUser }
+module.exports = { registerUser, loginUser };
