@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ProfileService } from 'src/app/profile.service';
+import { Cloudinary } from '@cloudinary/url-gen';
 
 @Component({
   selector: 'app-basic-info-dashboard',
@@ -10,7 +11,8 @@ import { ProfileService } from 'src/app/profile.service';
 export class BasicInfoDashboardComponent {
   constructor(
     private formBuilder: FormBuilder,
-    private profile: ProfileService
+    private profile: ProfileService,
+    private cloudinary: Cloudinary
   ) {}
   skillListStr = '';
   skillList: string[] = [];
@@ -27,6 +29,7 @@ export class BasicInfoDashboardComponent {
       this.basicInfo.patchValue(this.profile.basicInfo);
       this.skillList = this.profile.basicInfo.skillsData;
     }
+    this.cloudinary.
   }
 
   onSubmit() {

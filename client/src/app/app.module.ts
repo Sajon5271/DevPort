@@ -33,6 +33,7 @@ import { DashboardComponentsComponent } from './components/dashboard-components/
 import { HrClientComponentsComponent } from './components/hr-client-components/hr-client-components.component';
 import { WebViewComponentsComponent } from './components/web-view-components/web-view-components.component';
 import { CustombuttonComponent } from './components/custombutton/custombutton.component';
+import { CloudinaryModule } from '@cloudinary/ng';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { CustombuttonComponent } from './components/custombutton/custombutton.co
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+    CloudinaryModule
   ],
   providers: [
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
