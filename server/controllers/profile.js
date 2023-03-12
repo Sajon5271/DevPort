@@ -27,11 +27,11 @@ async function getSingleProfile(req, res) {
 
 async function updateProfile(req, res) {
   try {
-    const currentUserProfile = await Profile.findById(
-      req.currentUser.profileId
+    const currentUserProfile = await Profile.findByIdAndUpdate(
+      req.currentUser.profileId,
+      req.body,
+      { new: true }
     );
-    currentUserProfile = req.body;
-    await currentUserProfile.save();
     res.status(201);
     res.send(currentUserProfile);
   } catch (error) {

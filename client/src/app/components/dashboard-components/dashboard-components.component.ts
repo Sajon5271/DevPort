@@ -9,6 +9,7 @@ import {
 import { ApiService } from 'src/app/services/api.service';
 import { ActivatedRoute, Route } from '@angular/router';
 import { profile } from '../../interfaces/profile';
+import { ProfileService } from 'src/app/profile.service';
 
 @Component({
   selector: 'app-dashboard-components',
@@ -106,43 +107,18 @@ export class DashboardComponentsComponent {
   constructor(
     private formBuilder: FormBuilder,
     private profileData: ApiService,
+    private profile: ProfileService,
     private router: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.profileID = localStorage.getItem('profileId') || '';
-    this.getProfile();
+    
   }
 
   setNavElements(clickedItem: string) {
     this.navElements = clickedItem;
   }
 
-  getProfile(): void {
-    if (this.profileID)
-      this.profileData
-        .getProfileData(this.profileID)
-        .subscribe((res: profile) => {
-          this.profileInfo = res;
-          const {
-            fullname,
-            email,
-            showEmail,
-            careerObj,
-            skillsData,
-            jobTitle,
-          } = res.basicInfo;
-          this.profileForm.controls.basicInfo.setValue({
-            fullname,
-            email,
-            showEmail,
-            careerObj,
-            jobTitle,
-          });
-          this.skillsData = res.basicInfo ? res.basicInfo.skillsData : [];
-          // this.profileForm.get('basicInfo.email')?.setValue(res.email);
-        });
-  }
 
   handleSubmit() {
     // console.log(this.profileForm.value)

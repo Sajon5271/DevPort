@@ -29,6 +29,7 @@ const authMiddleware = async (req, res, next) => {
         message: 'Session expired, please log in again',
       });
     }
+    console.log(error);
     res.status(500).send({ error: '500', message: 'Something went wrong' });
   }
 };

@@ -9,6 +9,7 @@ import {
 import { ApiService } from 'src/app/services/api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { ProfileService } from 'src/app/profile.service';
 
 @Component({
   selector: 'app-signup',
@@ -22,10 +23,9 @@ export class SignupComponent {
     password: new FormControl('', [Validators.required]),
   });
   constructor(
-    private formBuilder: FormBuilder,
     private authService: AuthService,
-    private router: ActivatedRoute,
-    private routerJump: Router
+    private routerJump: Router,
+    private profile: ProfileService
   ) {}
 
   ngOnInit(): void {
@@ -39,7 +39,9 @@ export class SignupComponent {
         next: (res: any) => {
           localStorage.setItem('accessToken', res.accessToken);
           localStorage.setItem('profileId', res.profileId);
-          this.routerJump.navigate([`/dashboard`]);
+          this.profile.updateLocalProfileData(() => {
+            this.routerJump.navigate([`/dashboard`]);
+          });
         },
         error: (err) => {
           this.errorMessage = err.error.message;

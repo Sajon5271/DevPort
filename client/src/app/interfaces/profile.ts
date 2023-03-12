@@ -1,25 +1,25 @@
 export interface profile {
-  basicInfo: basicInfo;
-  userAccInfo: userAccInfo;
-  education: education[];
-  experiences: experiences[];
-  projects: projects[];
+  basicInfo?: basicInfo;
+  userAccInfo?: userAccInfo;
+  education?: education[];
+  experiences?: experiences[];
+  projects?: projects[];
 }
 
 interface basicInfo {
-  fullname: string;
-  email: string;
-  jobTitle: string;
+  fullname:string;
+  email:string;
+  jobTitle:string;
   showEmail: boolean;
-  careerObj: string;
+  careerObj:string;
   skillsData: string[];
   // pphoto: string;
 }
 
 interface userAccInfo {
-  githubLink: string;
-  soLink: string;
-  leetcodeLink: string;
+  githubLink:string;
+  soLink:string;
+  leetcodeLink:string;
 }
 
 interface education {
