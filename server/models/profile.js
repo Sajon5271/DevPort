@@ -1,43 +1,44 @@
 // const { model } = require('mongoose');
 const mongoose = require('mongoose');
 
-const basicInfoSchema = mongoose.Schema({
+const basicInfoSchema = new mongoose.Schema({
   fullname: String,
   jobTitle: String,
+  email: String,
   showEmail: {
     type: Boolean,
     default: false,
   },
   careerObj: String,
   // pphoto: String,
-  skillsData: [String],
+  skillsData: { type: [String], default: [] },
 });
 
-const userAccInfoSchema = mongoose.Schema({
+const userAccInfoSchema = new mongoose.Schema({
   githubLink: String,
   soLink: String,
   leetcodeLink: String,
 });
 
-const educationSchema = mongoose.Schema({
+const educationSchema = new mongoose.Schema({
   eduLevel: String,
   instName: String,
   eduDescription: String,
 });
 
-const experienceSchema = mongoose.Schema({
+const experienceSchema = new mongoose.Schema({
   companyName: String,
   jobRole: String,
   jobDescription: String,
 });
 
-const projectSchema = mongoose.Schema({
+const projectSchema = new mongoose.Schema({
   projectTitle: String,
   demovideo: String,
   projectDescription: String,
 });
 
-const profileSchema = mongoose.Schema({
+const profileSchema = new mongoose.Schema({
   basicInfo: basicInfoSchema,
   userAccInfo: userAccInfoSchema,
   education: [educationSchema],

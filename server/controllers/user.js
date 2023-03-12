@@ -14,7 +14,9 @@ async function registerUser(req, res) {
         .send({ error: '409', message: 'User already exists' });
     } else {
       const hashedPassword = await bcrypt.hash(req.body.password, 10);
-      const newProfile = await Profile.create({});
+      const newProfile = await Profile.create({
+        basicInfo: { email: req.body.email },
+      });
       const newUser = await User.create({
         email: req.body.email,
         password: hashedPassword,
@@ -25,7 +27,7 @@ async function registerUser(req, res) {
       });
 
       res.status(201);
-      res.send({ accessToken });
+      res.send({ accessToken, profileId: newUser.profileId });
     }
   } catch (error) {
     console.log(error);
@@ -51,7 +53,7 @@ async function loginUser(req, res) {
           expiresIn: '7d',
         });
         res.status(200);
-        res.send({ accessToken });
+        res.send({ accessToken, profileId: user.profileId });
       } else {
         res
           .status(401)

@@ -16,7 +16,7 @@ export class WebViewComponentsComponent {
   // gitInfo: any;
   gitImg: any;
 
-  // profileID: String="";
+  // profileID: string="";
   // @Output()
   // navClicked = new EventEmitter();
   // navElements = 'getAbout'
@@ -31,7 +31,7 @@ export class WebViewComponentsComponent {
     private profileData: ApiService,
     private router: ActivatedRoute
   ) {}
-  profileID: String = this.router.snapshot.params['id'];
+  profileID: string = this.router.snapshot.params['id'];
   getProfile(): void {
     this.profileData.getProfileData(this.profileID).subscribe((res) => {
       this.profileInfo = res;
@@ -85,5 +85,4 @@ export class WebViewComponentsComponent {
     // console.log(this.profileID)
     // this.getProfile();
   }
-
 }

@@ -1,5 +1,4 @@
-export interface signin{
-    _id: any;
-    email: string,
-    password: string
+export interface signin {
+  email: string;
+  password: string;
 }

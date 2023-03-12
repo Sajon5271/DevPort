@@ -9,7 +9,7 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class HrClientComponentsComponent {
   allProfileData: any = [];
-  filterSelected!: String;
+  filterSelected!: string;
   filterSelectedArray: any = ['All'];
   skills = [
     { name: 'All', status: true },
@@ -68,7 +68,7 @@ export class HrClientComponentsComponent {
     }
   }
 
-  selectFilter(skillName: String) {
+  selectFilter(skillName: string) {
     if (this.filterSelectedArray.includes(skillName)) {
       const index = this.filterSelectedArray.indexOf(skillName);
       if (index > -1) {
@@ -89,7 +89,7 @@ export class HrClientComponentsComponent {
 
     this.skills = newList;
   }
-  individualProfileClick(id: String) {
+  individualProfileClick(id: string) {
     const ProfileId = id;
     const profileLink = `http://localhost:4200/web-view/${id}`;
     console.log(profileLink);

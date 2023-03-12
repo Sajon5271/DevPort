@@ -1,16 +1,18 @@
 export interface profile {
   basicInfo: basicInfo;
   userAccInfo: userAccInfo;
-  education: education;
-  experiences: experiences;
-  projects: projects;
+  education: education[];
+  experiences: experiences[];
+  projects: projects[];
 }
 
 interface basicInfo {
   fullname: string;
   email: string;
+  jobTitle: string;
+  showEmail: boolean;
   careerObj: string;
-  skills: [string];
+  skillsData: string[];
   // pphoto: string;
 }
 
@@ -21,43 +23,19 @@ interface userAccInfo {
 }
 
 interface education {
-  eduLevel1: string;
-  instName1: string;
-  eduDescription1: string;
-
-  eduLevel2: string;
-  instName2: string;
-  eduDescription2: string;
-
-  eduLevel3: string;
-  instName3: string;
-  eduDescription3: string;
+  eduLevel: string;
+  instName: string;
+  eduDescription: string;
 }
 
 interface experiences {
-  companyName1: string;
-  jobRole1: string;
-  jobDescription1: string;
-
-  companyName2: string;
-  jobRole2: string;
-  jobDescription2: string;
-
-  companyName3: string;
-  jobRole3: string;
-  jobDescription3: string;
+  companyName: string;
+  jobRole: string;
+  jobDescription: string;
 }
 
 interface projects {
-  projectTitle1: string;
-  demovideo1: string;
-  projectDescription1: string;
-
-  projectTitle2: string;
-  demovideo2: string;
-  projectDescription2: string;
-
-  projectTitle3: string;
-  demovideo3: string;
-  projectDescription3: string;
+  projectTitle: string;
+  demovideo: string;
+  projectDescription: string;
 }

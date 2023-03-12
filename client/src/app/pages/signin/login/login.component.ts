@@ -9,6 +9,7 @@ import {
 import { ApiService } from 'src/app/services/api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { signin } from 'src/app/interfaces/signin';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -16,19 +17,20 @@ import { signin } from 'src/app/interfaces/signin';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  errorMsg: String | undefined;
+  errorMsg: string | undefined;
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
   });
   constructor(
     private formBuilder: FormBuilder,
-    private profileData: ApiService,
+    private authService: AuthService,
     private router: ActivatedRoute,
     private routerJump: Router
   ) {}
 
   ngOnInit(): void {
+    if (this.authService.isLoggedIn) this.routerJump.navigate(['/dashboard']);
     const userStr = localStorage.getItem('user');
     if (userStr) {
       const user = JSON.parse(userStr);
@@ -51,19 +53,17 @@ export class LoginComponent {
   // }
 
   handleSubmit() {
-    const loginFormValue = this.loginForm.value;
-    console.log(loginFormValue);
-    if (loginFormValue) {
-      this.profileData.postLoginData(loginFormValue).subscribe({
+    const { email, password } = this.loginForm.value;
+    if (email && password) {
+      this.authService.login({ email, password }).subscribe({
         next: (res: any) => {
-          console.log('Res :', res.body);
-          localStorage.setItem('token', JSON.stringify(res.body.token));
-          // localStorage.setItem('accessToken', res.headers.get('authorization'));
-          localStorage.setItem('user', JSON.stringify(res.body.user));
-          localStorage.setItem('userId', res.body.user._id);
+          localStorage.setItem('accessToken', res.accessToken);
+          localStorage.setItem('profileId', res.profileId);
           this.routerJump.navigate([`/dashboard`]);
         },
-        error: (error) => (this.errorMsg = error.error),
+        error: (error) => {
+          this.errorMsg = error.error.message;
+        },
       });
     } else {
       this.errorMsg = 'Please enter email and password.';

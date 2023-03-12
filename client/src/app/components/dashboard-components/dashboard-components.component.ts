@@ -16,9 +16,9 @@ import { profile } from '../../interfaces/profile';
   styleUrls: ['./dashboard-components.component.css'],
 })
 export class DashboardComponentsComponent {
-  profileInfo!: any;
+  profileInfo!: profile;
   navElements = 'basic-info';
-  profileID: any = '';
+  profileID = '';
   // skillsData = [''];
   skillsInput: string = '';
   skillExists: string = '';
@@ -29,11 +29,12 @@ export class DashboardComponentsComponent {
       //   Validators.required,
       //   Validators.minLength(4),
       // ]),
-      fullname: [],
-      jobTitle: [],
-      email: [],
-      careerObj: [],
-      pphoto: [],
+      fullname: [''],
+      jobTitle: [''],
+      email: [''],
+      showEmail: [true],
+      careerObj: [''],
+      // pphoto: [],
     }),
 
     userAccInfo: this.formBuilder.group({
@@ -109,38 +110,38 @@ export class DashboardComponentsComponent {
   ) {}
 
   ngOnInit(): void {
-    this.profileID = localStorage.getItem('userId');
-    console.log('Profile ID : ', this.profileID);
+    this.profileID = localStorage.getItem('profileId') || '';
     this.getProfile();
-
-    // const userStr = localStorage.getItem('user');
-    // if(userStr){
-    //   const user = JSON.parse(userStr);
-    //   this.routerJump.navigate([`'dashboard/'+${this.profileID}`])
-    //   // if(user.usertype === 'admin'){
-    //   //   this.routerJump.navigate([])
-    //   // }
-    // }
-    // else{
-    //   this.routerJump.navigate([`login`])
-    // }
   }
 
   setNavElements(clickedItem: string) {
     this.navElements = clickedItem;
-    console.log('from dashboard component ', this.navElements);
   }
 
   getProfile(): void {
-    this.profileData.getProfileData(this.profileID).subscribe((res: any) => {
-      this.profileInfo = res;
-      console.log('User Profile Data : ', res);
-      this.profileForm.patchValue(res);
-      this.skillsData = res.basicInfo.skillsData
-        ? res.basicInfo.skillsData
-        : [];
-      // this.profileForm.get('basicInfo.email')?.setValue(res.email);
-    });
+    if (this.profileID)
+      this.profileData
+        .getProfileData(this.profileID)
+        .subscribe((res: profile) => {
+          this.profileInfo = res;
+          const {
+            fullname,
+            email,
+            showEmail,
+            careerObj,
+            skillsData,
+            jobTitle,
+          } = res.basicInfo;
+          this.profileForm.controls.basicInfo.setValue({
+            fullname,
+            email,
+            showEmail,
+            careerObj,
+            jobTitle,
+          });
+          this.skillsData = res.basicInfo ? res.basicInfo.skillsData : [];
+          // this.profileForm.get('basicInfo.email')?.setValue(res.email);
+        });
   }
 
   handleSubmit() {

@@ -1,20 +1,18 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent {
-  constructor( private route : Router){}
-  btnText = "Log Out"
-  localStore = localStorage.getItem("userId")
+  constructor(private route: Router, public authService: AuthService) {}
+  btnText = 'Log Out';
 
   logout() {
-    console.log("logout")
-    // console.log(localStorage.getItem("userId"))
-    // localStorage.clear();
-    // this.route.navigate(['login']);
+    localStorage.clear();
+    this.route.navigate(['login']);
   }
 }
