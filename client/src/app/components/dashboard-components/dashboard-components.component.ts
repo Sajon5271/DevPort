@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import {
-  FormArray,
   FormBuilder,
-  FormControl,
   FormGroup,
-  Validators,
 } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { ActivatedRoute, Route } from '@angular/router';

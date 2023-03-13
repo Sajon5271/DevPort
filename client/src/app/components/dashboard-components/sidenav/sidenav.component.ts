@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-sidenav',
@@ -10,7 +10,6 @@ export class SidenavComponent {
   navClicked = new EventEmitter();
   navclick(clickedElements: string) {
     this.navClicked.emit(clickedElements);
-    console.log('from side nav ', clickedElements);
   }
   ngInit(): void {}
 }

@@ -82,7 +82,6 @@ export class BasicInfoDashboardComponent {
         .subscribe((res: any) => {
           this.profile_pic_url = res.secure_url || '';
         });
-      // this.imageFile = fileInput.files[0];
     }
   }
 }

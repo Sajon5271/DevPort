@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { profile } from 'src/app/interfaces/profile';
 import { ApiService } from 'src/app/services/api.service';
 
@@ -10,20 +9,14 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class HrClientComponentsComponent {
   allProfileData: profile[] = [];
-  filterSelected: string = '';
-  filterSelectedArray: any = ['All'];
   skills: { skill: string; count: number }[] = [];
   selectedSkills: { skill: string; count: number }[] = [];
 
-  constructor(
-    private profileData: ApiService,
-    private router: ActivatedRoute
-  ) {}
+  constructor(private profileData: ApiService) {}
 
   ngOnInit(): void {
     this.getAllProfile();
     this.profileData.getAllSkills().subscribe((res) => {
-      // this.skills.push({ skill: 'All', count: 0 });
       let total = 0;
       res.forEach((el, idx) => {
         if (idx < 10) this.skills.push(el);
