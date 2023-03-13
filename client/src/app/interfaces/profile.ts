@@ -7,19 +7,19 @@ export interface profile {
 }
 
 interface basicInfo {
-  fullname:string;
-  email:string;
-  jobTitle:string;
+  fullname: string;
+  email: string;
+  jobTitle: string;
   showEmail: boolean;
-  careerObj:string;
+  careerObj: string;
   skillsData: string[];
-  // pphoto: string;
+  pphoto?: string;
 }
 
 interface userAccInfo {
-  githubLink:string;
-  soLink:string;
-  leetcodeLink:string;
+  githubLink: string;
+  soLink: string;
+  leetcodeLink: string;
 }
 
 interface education {

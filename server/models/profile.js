@@ -10,7 +10,7 @@ const basicInfoSchema = new mongoose.Schema({
     default: false,
   },
   careerObj: String,
-  // pphoto: String,
+  pphoto: String,
   skillsData: { type: [String], default: [] },
 });
 

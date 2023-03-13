@@ -38,6 +38,10 @@ export class ProfileService {
     });
   }
 
+  get profileId() {
+    return localStorage.getItem('profileId') || '';
+  }
+
   get authToken() {
     return localStorage.getItem('accessToken');
   }
