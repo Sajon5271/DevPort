@@ -6,11 +6,28 @@
       DevPort
     </div>
     <div class="flex md:order-2">
-      <div *ngIf="authService.isLoggedIn">
-        <app-custombutton (click)="logout()" [buttonText]="btnText"
-          >Log Out</app-custombutton
-        >
+      <div class="flex gap-2">
+        <ng-container *ngIf="authService.isLoggedIn; else loginSignUpButton">
+          <app-custombutton
+            routerLink="/dashboard"
+            [buttonText]="'Dashboard'"
+          ></app-custombutton>
+          <app-custombutton
+            (click)="logout()"
+            [buttonText]="'Log Out'"
+          ></app-custombutton>
+        </ng-container>
       </div>
+      <ng-template #loginSignUpButton>
+        <app-custombutton
+          routerLink="/signup"
+          [buttonText]="'Sign Up'"
+        ></app-custombutton>
+        <app-custombutton
+          routerLink="/login"
+          [buttonText]="'Log In'"
+        ></app-custombutton>
+      </ng-template>
 
       <!-- <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">
           <span class="sr-only">Open main menu</span>

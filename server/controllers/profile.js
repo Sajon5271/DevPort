@@ -41,8 +41,38 @@ async function updateProfile(req, res) {
   }
 }
 
+async function getAllSkills(req, res) {
+  try {
+    const allSkillsArray = await Profile.aggregate()
+      .match({})
+      .unwind('basicInfo.skillsData')
+      .group({
+        _id: '$_id',
+        skillsData: { $push: '$basicInfo.skillsData' },
+      })
+      .unwind('skillsData')
+      .group({ _id: 'S', allSkills: { $push: '$skillsData' } });
+    const skillList = allSkillsArray[0].allSkills;
+    const counts = {};
+    for (let i = 0; i < skillList.length; i++) {
+      counts[skillList[i].toLowerCase().trim()] =
+        1 + (counts[skillList[i].toLowerCase().trim()] || 0);
+    }
+    const countArray = [];
+    for (const [key, value] of Object.entries(counts))
+      countArray.push({ skill: key, count: value });
+    countArray.sort((a, b) => b.count - a.count);
+    res.send(countArray);
+  } catch (error) {
+    console.log(error);
+    res.status(500);
+    res.send({ error: '500', message: 'Something went wrong' });
+  }
+}
+
 module.exports = {
   getAllProfiles,
   updateProfile,
   getSingleProfile,
+  getAllSkills,
 };

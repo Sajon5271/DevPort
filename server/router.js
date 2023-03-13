@@ -8,5 +8,6 @@ router.put('/dashboard', authMiddleware, profileController.updateProfile);
 router.get('/dashboard/:id', profileController.getSingleProfile);
 router.post('/register', userController.registerUser);
 router.post('/login', userController.loginUser);
+router.get('/skills', profileController.getAllSkills);
 
 module.exports = router;

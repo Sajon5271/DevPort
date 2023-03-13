@@ -62,7 +62,10 @@ export class BasicInfoDashboardComponent {
   }
 
   updateSkillList() {
-    if (this.skillListStr) this.skillList.push(...this.skillListStr.split(','));
+    if (this.skillListStr)
+      this.skillList.push(
+        ...this.skillListStr.split(',').map((el) => el.trim())
+      );
     this.skillListStr = '';
   }
 

@@ -1,4 +1,5 @@
 export interface profile {
+  _id?: string;
   basicInfo?: basicInfo;
   userAccInfo?: userAccInfo;
   education?: education[];

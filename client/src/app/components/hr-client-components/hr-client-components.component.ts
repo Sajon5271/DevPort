@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { profile } from 'src/app/interfaces/profile';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -8,18 +9,11 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./hr-client-components.component.css'],
 })
 export class HrClientComponentsComponent {
-  allProfileData: any = [];
-  filterSelected!: string;
+  allProfileData: profile[] = [];
+  filterSelected: string = '';
   filterSelectedArray: any = ['All'];
-  skills = [
-    { name: 'All', status: true },
-    { name: 'React', status: false },
-    { name: 'Angular', status: false },
-    { name: 'NodeJS', status: false },
-    { name: 'MongoDB', status: false },
-    { name: '.NET', status: false },
-  ];
-  // skills = ['All','React','Angular','NodeJS','MongoDB','.NET']
+  skills: { skill: string; count: number }[] = [];
+  selectedSkills: { skill: string; count: number }[] = [];
 
   constructor(
     private profileData: ApiService,
@@ -28,74 +22,65 @@ export class HrClientComponentsComponent {
 
   ngOnInit(): void {
     this.getAllProfile();
-  }
-
-  findCommonElement(array1: any[], array2: any[]) {
-    for (let i = 0; i < array1.length; i++) {
-      for (let j = 0; j < array2.length; j++) {
-        if (array1[i] === array2[j]) {
-          return true;
-        }
-      }
-    }
-
-    return false;
+    this.profileData.getAllSkills().subscribe((res) => {
+      // this.skills.push({ skill: 'All', count: 0 });
+      let total = 0;
+      res.forEach((el, idx) => {
+        if (idx < 10) this.skills.push(el);
+        total += el.count;
+      });
+      this.skills.unshift({ skill: 'All', count: total });
+      this.selectedSkills.push(this.skills[0]);
+    });
   }
 
   getAllProfile() {
-    this.profileData.getAllProfileData().subscribe(
-      (res: any) => {
-        console.log('All Profile Data : ', res);
+    this.profileData.getAllProfileData().subscribe({
+      next: (res: profile[]) => {
         this.allProfileData = res ? res : [];
-        // console.log(this.allProfileData)
       },
-      (err) => {
+      error: (err) => {
         console.log('Error : ', err);
-      }
-    );
+      },
+    });
   }
 
   getFilteredData() {
-    // console.log(this.filterSelectedArray)
-    if (this.filterSelectedArray.includes('All')) {
+    if (this.selectedSkills[0]?.skill === 'All') {
       return this.allProfileData;
     } else {
-      return this.allProfileData.filter((profile: any) =>
-        profile.basicInfo.skillsData.some((x: any) => {
-          return this.filterSelectedArray.includes(x);
+      return this.allProfileData.filter((profile: profile) =>
+        profile.basicInfo?.skillsData.some((skill: string) => {
+          return this.selectedSkills.filter(
+            (el) => el.skill === skill.toLowerCase().trim()
+          ).length;
         })
       );
     }
   }
 
-  selectFilter(skillName: string) {
-    if (this.filterSelectedArray.includes(skillName)) {
-      const index = this.filterSelectedArray.indexOf(skillName);
-      if (index > -1) {
-        this.filterSelectedArray.splice(index, 1);
-      }
+  skillClickEvent(skillObj: { skill: string; count: number }) {
+    if (skillObj.skill === 'All') {
+      this.selectedSkills = [this.skills[0]];
     } else {
-      this.filterSelectedArray.push(skillName);
+      this.selectedSkills = this.selectedSkills.filter(
+        (el) => el.skill !== 'All'
+      );
+      if (this.isSelected(skillObj)) {
+        this.selectedSkills.splice(this.selectedSkills.indexOf(skillObj), 1);
+        if (!this.selectedSkills.length) this.selectedSkills = [this.skills[0]];
+      } else this.selectedSkills.push(skillObj);
     }
   }
 
-  skillClickEvent(name: string) {
-    const newList = this.skills.map((skill) => {
-      if (skill.name === name) {
-        skill.status = !skill.status;
-      }
-      return skill;
-    });
+  getPPImage(profile: profile) {
+    if (profile.basicInfo?.pphoto) return profile.basicInfo.pphoto;
+    else
+      return 'https://res.cloudinary.com/dk3znnsme/image/upload/v1678689567/no-photo_lzfpmg.webp';
+  }
 
-    this.skills = newList;
-  }
-  individualProfileClick(id: string) {
-    const ProfileId = id;
-    const profileLink = `http://localhost:4200/web-view/${id}`;
-    console.log(profileLink);
-  }
-  getPPImage(x: string) {
-    const githubProfile = 'https://api.github.com/users/' + x;
-    console.log(githubProfile);
+  isSelected(skillObj: { skill: string; count: number }) {
+    if (this.selectedSkills.includes(skillObj)) return true;
+    else return false;
   }
 }

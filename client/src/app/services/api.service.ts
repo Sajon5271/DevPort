@@ -12,12 +12,11 @@ import { githubdata } from '../interfaces/githubdata';
 })
 export class ApiService {
   Url = `http://localhost:3000/dashboard`;
+  skillsUrl = `http://localhost:3000/skills`;
   leetcodeURL = 'https://leetcode-stats-api.herokuapp.com/';
   githubURL = 'https://api.github.com/users/';
 
   constructor(private http: HttpClient, private router: ActivatedRoute) {}
-
-  // profileID:string = this.router.snapshot.params['id']
 
   getAllProfileData(): Observable<profile[]> {
     return this.http.get<profile[]>(`${this.Url}/`);
@@ -26,8 +25,6 @@ export class ApiService {
   getProfileData(id: string): Observable<profile> {
     return this.http.get<profile>(`${this.Url}/${id}`);
   }
-
-  // getProfileDataPortfolio(id: any): Observable<profile> {
 
   postProfileData(data: profile) {
     this.http.post(this.Url, data);
@@ -40,7 +37,10 @@ export class ApiService {
     return this.http.get<leetcode>(`${this.leetcodeURL}/${username}`);
   }
   getImage(username: string) {
-    console.log(`${this.githubURL}${username}`);
     return this.http.get<githubdata>(`${this.githubURL}${username}`);
+  }
+
+  getAllSkills(): Observable<{ skill: string; count: number }[]> {
+    return this.http.get<{ skill: string; count: number }[]>(this.skillsUrl);
   }
 }

@@ -64,7 +64,7 @@
         class="form-control block w-25 px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
         id="exampleFormControlTextarea1"
         rows="3"
-        placeholder="Your Skills"
+        placeholder="Your Skills (Separate by comma for multiple)"
         [(ngModel)]="skillListStr"
         [ngModelOptions]="{ standalone: true }"
       />
@@ -153,7 +153,14 @@
       />
     </label>
   </div>
-  <img *ngIf="hasProPic" [src]="profile_pic_url" />
+
+  <div
+    class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-8"
+  >
+    <!-- <img class="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" /> -->
+    <img class="rounded-t-lg p-8" *ngIf="hasProPic" [src]="profile_pic_url" />
+  </div>
+
   <button
     type="submit"
     (click)="onSubmit()"
