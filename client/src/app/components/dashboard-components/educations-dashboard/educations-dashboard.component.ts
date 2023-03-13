@@ -1,39 +1,53 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray,FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
-
-
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { ProfileService } from 'src/app/profile.service';
 
 @Component({
   selector: 'app-educations-dashboard',
   templateUrl: './educations-dashboard.component.html',
-  styleUrls: ['./educations-dashboard.component.css']
+  styleUrls: ['./educations-dashboard.component.css'],
 })
+export class EducationsDashboardComponent implements OnInit {
+  constructor(private fb: FormBuilder, private profile: ProfileService) {}
 
+  educationDetails = this.fb.array<FormGroup>([]);
 
-export class EducationsDashboardComponent implements OnInit{
-  educationForm!: FormGroup;
-  get newInstitutions(){
-    return this.educationForm.get('newInstitutions') as FormArray
+  ngOnInit() {
+    this.profile.education.forEach(
+      (el: { eduLevel: string; instName: string; eduDescription: string }) => {
+        const formGroup = this.fb.group({
+          eduLevel: [''],
+          instName: [''],
+          eduDescription: [''],
+        });
+        formGroup.patchValue(el);
+        this.educationDetails.push(formGroup);
+      }
+    );
   }
-  get newSingleInstitution(){
-    return this.newInstitutions.push(this.fb.group({
-      educationLevel: [''],
-      institution: [''],
-      description: ['']
-    }))
+
+  onSubmit() {
+    console.log(this.educationDetails.value);
+    this.profile
+      .updateProfile({ education: this.educationDetails.value })
+      .subscribe(() => this.profile.updateLocalProfileData());
   }
-  constructor(private fb: FormBuilder) { }
-  
-  
-  ngOnInit(){
-    this.educationForm = this.fb.group({
-      newInstitutions: this.fb.array([
-        this.fb.group({
-          educationLevel: [''],
-          institution: [''],
-          description: ['']
-        })
-      ])
-  })
-}
+  addAnotherEducation() {
+    const educationForm = this.fb.group({
+      eduLevel: [''],
+      instName: [''],
+      eduDescription: [''],
+    });
+    this.educationDetails.push(educationForm);
+  }
+
+  removeEducation(index: number) {
+    this.educationDetails.removeAt(index)
+  }
 }
