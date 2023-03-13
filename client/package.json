@@ -23,6 +23,7 @@
     "@auth0/angular-jwt": "^5.1.2",
     "@cloudinary/ng": "^1.11.1",
     "@cloudinary/url-gen": "^1.9.2",
+    "angular-oauth2-oidc": "^15.0.1",
     "bootstrap": "^5.2.3",
     "ngx-dropzone": "^3.1.0",
     "rxjs": "~7.5.0",

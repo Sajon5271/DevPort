@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth.guard';
+import { GithubLoginComponent } from './github-login/github-login.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { HrClientComponent } from './pages/hr-client/hr-client.component';
 import { LandingComponent } from './pages/landing/landing.component';
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'web-view/:id', component: WebViewComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
+  { path: 'githubLogin', component: GithubLoginComponent },
   { path: '', component: LandingComponent, pathMatch: 'full' },
 ];
 

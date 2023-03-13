@@ -33,4 +33,13 @@ export class AuthService {
     if (!authToken || this.jwthelper.isTokenExpired(authToken)) return false;
     return true;
   }
+
+  oauthLogin(): Observable<{ accessToken: string }> {
+    return this.http.post<{ accessToken: string }>(
+      this.baseURL + '/oauthLogin',
+      {
+        access_token: localStorage.getItem('githubAccessToken'),
+      }
+    );
+  }
 }

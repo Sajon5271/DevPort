@@ -25,6 +25,7 @@ import { HrClientComponentsComponent } from './components/hr-client-components/h
 import { WebViewComponentsComponent } from './components/web-view-components/web-view-components.component';
 import { CustombuttonComponent } from './components/custombutton/custombutton.component';
 import { CloudinaryModule } from '@cloudinary/ng';
+import { GithubLoginComponent } from './github-login/github-login.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { CloudinaryModule } from '@cloudinary/ng';
     HrClientComponentsComponent,
     WebViewComponentsComponent,
     CustombuttonComponent,
+    GithubLoginComponent,
   ],
   imports: [
     BrowserModule,

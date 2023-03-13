@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { signin } from 'src/app/interfaces/signin';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProfileService } from 'src/app/profile.service';
+import { OauthService } from 'src/app/oauth.service';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +27,8 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private routerJump: Router,
-    private profile: ProfileService
+    private profile: ProfileService,
+    private oAuthService: OauthService
   ) {}
 
   ngOnInit(): void {
@@ -51,5 +53,9 @@ export class LoginComponent {
     } else {
       this.errorMsg = 'Please enter email and password.';
     }
+  }
+
+  githubLogin() {
+    this.oAuthService.githubOauthInit();
   }
 }
