@@ -1,12 +1,18 @@
 const GithubProjects = require('../models/githubProjects');
 
 const getUserProjects = async (req, res, next) => {
-  const id = req.params.id
+  const id = req.params.id;
   try {
     const userProjects = await GithubProjects.findOne({
       profileId: id,
     });
-    res.status(200).send(userProjects.githubProjects);
+    res
+      .status(200)
+      .send(
+        userProjects
+          ? userProjects.githubProjects
+          : { error: '500', message: 'Something went wrong' }
+      );
   } catch (error) {
     console.log(error);
     res.status(500).send({ error, message: 'Something went wrong' });

@@ -11,7 +11,26 @@ export class OauthService {
   constructor(private http: HttpClient) {}
 
   googleOauth() {}
-  linkedInOauth() {}
+  linkedInOauthInit() {
+    const client_id = '77rzv5egfbdz75';
+    const redirect_uri = 'http://localhost:4200/linkedInLogin';
+    const scopes = 'r_liteprofile r_emailaddress';
+    const response_type = 'code';
+    const url = new URL('https://www.linkedin.com/oauth/v2/authorization');
+    url.searchParams.append('client_id', client_id);
+    url.searchParams.append('redirect_uri', redirect_uri);
+    url.searchParams.append('scope', scopes);
+    url.searchParams.append('response_type', response_type);
+    window.location.href = url.toString();
+  }
+  linkedInOauthGetAccessCode(
+    code: string
+  ): Observable<{ access_token: string }> {
+    return this.http.post<{ access_token: string }>(
+      this.backendRoot + '/linkedInAccessCode',
+      { code }
+    );
+  }
   githubOauthInit() {
     const client_id = '14b988e7a523c9fd2467';
     const redirect_uri = 'http://localhost:4200/githubLogin';

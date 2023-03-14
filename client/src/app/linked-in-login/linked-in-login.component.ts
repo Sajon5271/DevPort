@@ -6,11 +6,11 @@ import { AuthService } from '../services/auth.service';
 import { ProfileService } from '../profile.service';
 
 @Component({
-  selector: 'app-github-login',
-  templateUrl: './github-login.component.html',
-  styleUrls: ['./github-login.component.css'],
+  selector: 'app-linked-in-login',
+  templateUrl: './linked-in-login.component.html',
+  styleUrls: ['./linked-in-login.component.css'],
 })
-export class GithubLoginComponent {
+export class LinkedInLoginComponent {
   constructor(
     private oauthService: OauthService,
     private router: Router,
@@ -21,7 +21,7 @@ export class GithubLoginComponent {
   ) {}
 
   ngOnInit() {
-    if (localStorage.getItem('githubAccessToken')) {
+    if (localStorage.getItem('linkedInAccessToken')) {
       this.router.navigate(['dashboard']);
       return;
     }
@@ -29,10 +29,11 @@ export class GithubLoginComponent {
       console.log(params);
       if (params['code']) {
         this.oauthService
-          .githubOauthGetAccessCode(params['code'])
+          .linkedInOauthGetAccessCode(params['code'])
           .subscribe((res) => {
-            localStorage.setItem('githubAccessToken', res.access_token);
-            this.authService.oauthLoginGithub().subscribe((res: any) => {
+            localStorage.setItem('linkedInAccessToken', res.access_token);
+            console.log(res);
+            this.authService.oauthLoginLinkedIn().subscribe((res: any) => {
               localStorage.setItem('accessToken', res.accessToken);
               localStorage.setItem('profileId', res.profileId);
               this.profile.updateLocalProfileData(() => {

@@ -15,6 +15,7 @@ router.post('/register', userController.registerUser);
 router.post('/login', userController.loginUser);
 router.get('/skills', profileController.getAllSkills);
 router.post('/githubAccessCode', oauthController.githubAccessCode);
+router.post('/linkedInAccessCode', oauthController.linkedInAccessCode);
 router.post('/oauthLogin', userController.oauthLogin);
 router.put('/updateGithubProjects', authMiddleware, updateUserProjects);
 router.get('/githubProjects/:id', getUserProjects);

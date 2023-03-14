@@ -34,11 +34,21 @@ export class AuthService {
     return true;
   }
 
-  oauthLogin(): Observable<{ accessToken: string }> {
+  oauthLoginGithub(): Observable<{ accessToken: string }> {
     return this.http.post<{ accessToken: string }>(
       this.baseURL + '/oauthLogin',
       {
+        provider: 'github',
         access_token: localStorage.getItem('githubAccessToken'),
+      }
+    );
+  }
+  oauthLoginLinkedIn(): Observable<{ accessToken: string }> {
+    return this.http.post<{ accessToken: string }>(
+      this.baseURL + '/oauthLogin',
+      {
+        provider: 'linkedin',
+        access_token: localStorage.getItem('linkedInAccessToken'),
       }
     );
   }

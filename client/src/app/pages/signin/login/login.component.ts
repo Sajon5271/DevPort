@@ -58,4 +58,7 @@ export class LoginComponent {
   githubLogin() {
     this.oAuthService.githubOauthInit();
   }
+  linkedInLogin() {
+    this.oAuthService.linkedInOauthInit();
+  }
 }

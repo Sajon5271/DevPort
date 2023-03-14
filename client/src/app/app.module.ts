@@ -26,6 +26,7 @@ import { WebViewComponentsComponent } from './components/web-view-components/web
 import { CustombuttonComponent } from './components/custombutton/custombutton.component';
 import { CloudinaryModule } from '@cloudinary/ng';
 import { GithubLoginComponent } from './github-login/github-login.component';
+import { LinkedInLoginComponent } from './linked-in-login/linked-in-login.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { GithubLoginComponent } from './github-login/github-login.component';
     WebViewComponentsComponent,
     CustombuttonComponent,
     GithubLoginComponent,
+    LinkedInLoginComponent,
   ],
   imports: [
     BrowserModule,

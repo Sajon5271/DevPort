@@ -18,6 +18,7 @@ const userAccInfoSchema = new mongoose.Schema({
   githubLink: String,
   soLink: String,
   leetcodeLink: String,
+  linkedInLink: String,
 });
 
 const educationSchema = new mongoose.Schema({

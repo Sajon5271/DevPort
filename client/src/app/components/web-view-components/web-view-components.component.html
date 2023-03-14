@@ -1,7 +1,7 @@
 <div class="page font-serif">
   <main>
     <section id="presentation" class="profile">
-      <div class="flex-col mt-12">
+      <div class="flex-col mt-20">
         <div class="self-center border-white relative flex justify-center">
           <img
             class="rounded-full h-72 w-72"
@@ -97,9 +97,10 @@
       <div class="mt-8 mb-8 text-left">
         <h3 class="title">Projects</h3>
         <div *ngFor="let repo of gitHubProjects" class="githubRepoContainer">
-          
           <div class="repoInfos">
-            <a href="{{ repo.html_url }}" class="githubRepoLink">{{ repo.name }}</a>
+            <a href="{{ repo.html_url }}" class="githubRepoLink">{{
+              repo.name
+            }}</a>
             <div class="repoDetails">{{ repo.description }}</div>
             <div class="langAndUpdate">
               <div class="repoLanguage" *ngIf="repo.language">
@@ -110,7 +111,8 @@
                 {{ repo.language | titlecase }}
               </div>
               <div class="updateTime">
-                Last Updated: <span class="time">{{ getUpdateTime(repo) }}</span>
+                Last Updated:
+                <span class="time">{{ getUpdateTime(repo) }}</span>
               </div>
             </div>
           </div>
