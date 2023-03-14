@@ -1,9 +1,10 @@
 const GithubProjects = require('../models/githubProjects');
 
 const getUserProjects = async (req, res, next) => {
+  const id = req.params.id
   try {
     const userProjects = await GithubProjects.findOne({
-      profileId: req.currentUser.profileId,
+      profileId: id,
     });
     res.status(200).send(userProjects.githubProjects);
   } catch (error) {

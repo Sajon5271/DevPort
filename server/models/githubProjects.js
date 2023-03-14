@@ -6,6 +6,8 @@ const projectsSchema = new mongoose.Schema({
   forks_count: Number,
   stargazers_count: Number,
   language: String,
+  description: String,
+  pushed_at: String,
 });
 const githubProjectSchema = new mongoose.Schema({
   profileId: {

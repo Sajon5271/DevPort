@@ -4,4 +4,6 @@ export interface GitProjectSaved {
   forks_count: number;
   stargazers_count: number;
   language: string;
+  description: string;
+  pushed_at: string;
 }

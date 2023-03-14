@@ -17,5 +17,5 @@ router.get('/skills', profileController.getAllSkills);
 router.post('/githubAccessCode', oauthController.githubAccessCode);
 router.post('/oauthLogin', userController.oauthLogin);
 router.put('/updateGithubProjects', authMiddleware, updateUserProjects);
-router.get('/githubProjects', authMiddleware, getUserProjects);
+router.get('/githubProjects/:id', getUserProjects);
 module.exports = router;

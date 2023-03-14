@@ -21,8 +21,9 @@ export class ProjectsDashboardComponent {
         .getGithubColor()
         .subscribe((res) => (this.languageColors = res));
     });
+    const profileId = localStorage.getItem('profileId') || '';
     this.profile
-      .getUserSelectedProjectsGithub()
+      .getUserSelectedProjectsGithub(profileId)
       .subscribe((res) => (this.selectedRepos = res));
   }
 
@@ -41,7 +42,15 @@ export class ProjectsDashboardComponent {
       .subscribe((res) => console.log(res));
   }
   onCheckChange(event: Event, repo: GithubRepo) {
-    const { name, html_url, stargazers_count, forks_count, language } = repo;
+    const {
+      name,
+      html_url,
+      stargazers_count,
+      forks_count,
+      language,
+      description,
+      pushed_at,
+    } = repo;
     const input = event.target as HTMLInputElement;
     if (input.checked) {
       this.selectedRepos.push({
@@ -50,6 +59,8 @@ export class ProjectsDashboardComponent {
         stargazers_count,
         forks_count,
         language,
+        description,
+        pushed_at,
       });
     } else {
       this.selectedRepos = this.selectedRepos.filter((el) => el.name !== name);

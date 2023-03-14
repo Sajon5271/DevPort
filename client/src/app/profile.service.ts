@@ -81,14 +81,9 @@ export class ProfileService {
     return this.http.get('assets/git-colors.json');
   }
 
-  getUserSelectedProjectsGithub(): Observable<GitProjectSaved[]> {
+  getUserSelectedProjectsGithub(profileId: string): Observable<GitProjectSaved[]> {
     return this.http.get<GitProjectSaved[]>(
-      'http://localhost:3000/githubProjects',
-      {
-        headers: {
-          Authorization: `Bearer ${this.authToken}`,
-        },
-      }
+      'http://localhost:3000/githubProjects/'+profileId
     );
   }
   updateUserSelectedProjectsGithub(

@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { GitProjectSaved } from 'src/app/interfaces/local_github_projects_interface';
+import { ProfileService } from 'src/app/profile.service';
 import { ApiService } from 'src/app/services/api.service';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'app-web-view-components',
@@ -9,46 +12,27 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class WebViewComponentsComponent {
   profileInfo!: any;
-  imgSrc: any;
-  leetCode: string | undefined;
-  leetcodeData: any;
+  gitContribution: any;
   leetcodeInfo: any;
-  // gitInfo: any;
-  gitImg: any;
+  profilePic: string = '';
+  gitHubProjects: GitProjectSaved[] = [];
+  profileID: string = '';
+  languageColors: any;
 
-  // profileID: string="";
-  // @Output()
-  // navClicked = new EventEmitter();
-  // navElements = 'getAbout'
-  // navclick(clickedElements: string){
-  //   this.navElements = clickedElements
-  //   console.log(this.navElements)
-  // }
-  // setNavElements(clickedItem: string) {
-  //   this.navElements = clickedItem;
-  // }
   constructor(
     private profileData: ApiService,
-    private router: ActivatedRoute
+    private router: ActivatedRoute,
+    private profile: ProfileService
   ) {}
-  profileID: string = this.router.snapshot.params['id'];
   getProfile(): void {
     this.profileData.getProfileData(this.profileID).subscribe((res) => {
       this.profileInfo = res;
-      this.imgSrc =
+      this.gitContribution =
         'https://ghchart.rshah.org/' + this.profileInfo.userAccInfo.githubLink;
-      // this.leetCode = "https://leetcode-stats-api.herokuapp.com/"+this.profileInfo.leetcodeLink
-      console.log('profileInfo', this.profileInfo);
-      // console.log(this.imgSrc);
-
-      // this.profileData.getLeetCodeData(this.profileInfo.leetcodeLink)
 
       this.getLeetData();
-      // this.profileForm.patchValue(res);
-      // this.profileForm.get('basicInfo.email')?.setValue(res.email);
-      // console.log('GitHub img link :',this.getGithubInfo())
-      // console.log("git Img URL :", gitImgURL)
-      this.getGithubInfo();
+
+      this.profilePic = this.profile.basicInfo.pphoto;
     });
   }
 
@@ -57,32 +41,27 @@ export class WebViewComponentsComponent {
       .getLeetCodeData(this.profileInfo.userAccInfo.leetcodeLink)
       .subscribe((res: any) => {
         this.leetcodeInfo = res;
-        // console.log(this.leetcodeInfo)
-
-        // console.log(this.imgSrc);
-
-        // this.profileData.getLeetCodeData(this.profileInfo.leetcodeLink)
-
-        // this.profileForm.patchValue(res);
-        // this.profileForm.get('basicInfo.email')?.setValue(res.email);
-      });
-  }
-
-  getGithubInfo(): void {
-    this.profileData
-      .getImage(this.profileInfo.userAccInfo.githubLink)
-      .subscribe((res: any) => {
-        // console.log('github link res :', res);
-        this.gitImg = res.avatar_url;
-        // return this.gitImg
       });
   }
 
   ngOnInit(): void {
-    // console.log(this.imgSrc)
+    this.profileID = this.router.snapshot.params['id'];
     this.getProfile();
+    this.profile
+      .getUserSelectedProjectsGithub(this.profileID)
+      .subscribe((res) => (this.gitHubProjects = res));
+    this.profile
+      .getGithubColor()
+      .subscribe((res) => (this.languageColors = res));
+  }
 
-    // console.log(this.profileID)
-    // this.getProfile();
+  getBgColorForLanguage(repo: GitProjectSaved) {
+    return this.languageColors[repo.language]
+      ? 'background-color:' + this.languageColors[repo.language].color + ';'
+      : 'background-color: transparent;';
+  }
+  getUpdateTime(repo: GitProjectSaved) {
+    const ago = DateTime.fromISO(repo.pushed_at).toRelative();
+    return ago;
   }
 }
