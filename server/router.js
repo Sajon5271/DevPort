@@ -1,5 +1,8 @@
 const router = require('express').Router();
-const { updateUserProjects } = require('./controllers/githubProjects');
+const {
+  updateUserProjects,
+  getUserProjects,
+} = require('./controllers/githubProjects');
 const oauthController = require('./controllers/oauth');
 const profileController = require('./controllers/profile');
 const userController = require('./controllers/user');
@@ -14,4 +17,5 @@ router.get('/skills', profileController.getAllSkills);
 router.post('/githubAccessCode', oauthController.githubAccessCode);
 router.post('/oauthLogin', userController.oauthLogin);
 router.put('/updateGithubProjects', authMiddleware, updateUserProjects);
+router.get('/githubProjects', authMiddleware, getUserProjects);
 module.exports = router;

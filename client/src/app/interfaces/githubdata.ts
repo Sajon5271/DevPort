@@ -1,6 +1,6 @@
 export interface githubdata {
   login: string;
-  id: 40396665;
+  id: number;
   node_id: string;
   avatar_url: string;
   gravatar_id: string;

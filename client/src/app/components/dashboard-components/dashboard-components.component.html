@@ -1,11 +1,9 @@
-<!-- <h1>{{this.profileID}}</h1> -->
 <div class="flex font-serif">
   <app-sidenav
     class="pt-10"
     (navClicked)="setNavElements($event)"
   ></app-sidenav>
-  <form
-    [formGroup]="profileForm"
+  <div
     [ngSwitch]="navElements"
     class="h-full min-h-screen w-full xl:pl-80 lg:pl-48 pb-2 bg-slate-100 grow flex-col mt-12"
   >
@@ -15,7 +13,6 @@
 
     <div *ngSwitchCase="'user-accounts'">
       <app-user-accounts-dashboard></app-user-accounts-dashboard>
-      
     </div>
 
     <div *ngSwitchCase="'educations'">
@@ -27,125 +24,7 @@
     </div>
 
     <div *ngSwitchCase="'projects'">
-      <!-- <app-projects-dashboard formGroupName="basicInfo"></app-projects-dashboard> -->
-
-      <div formGroupName="projects" class="self-center pt-10 w-5/12 pl-12">
-        <h2 class="underline">Projects</h2>
-        <div>
-          <div class="mb-3">
-            <input
-              formControlName="projectTitle1"
-              type="text"
-              class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-              id="exampleText0"
-              placeholder="Project Title"
-            />
-          </div>
-          <div class="mb-3">
-            <input
-              formControlName="demovideo1"
-              type="text"
-              class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-              id="exampleText0"
-              placeholder="Demo video URL"
-            />
-          </div>
-
-          <!-- <ngx-dropzone (change)="onSelect($event)">
-                              <div>
-                                  <ngx-dropzone-label>Drop it, here!</ngx-dropzone-label>
-                                  <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
-                                  <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-                              </ngx-dropzone-preview>
-                              </div>
-
-                          </ngx-dropzone> -->
-
-          <div class="my-3">
-            <textarea
-              formControlName="projectDescription1"
-              type="text"
-              class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-              id="exampleText0"
-              placeholder="Project Description"
-            ></textarea>
-          </div>
-        </div>
-
-        <hr
-          class="w-full h-1 mx-auto my-4 bg-gray-200 border-0 rounded md:my-10 dark:bg-gray-700"
-        />
-
-        <div>
-          <div class="mb-3">
-            <input
-              formControlName="projectTitle1"
-              type="text"
-              class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-              id="exampleText0"
-              placeholder="Project Title"
-            />
-          </div>
-          <div class="mb-3">
-            <input
-              formControlName="demovideo1"
-              type="text"
-              class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-              id="exampleText0"
-              placeholder="Demo video URL"
-            />
-          </div>
-
-          <div class="my-3">
-            <textarea
-              formControlName="projectDescription1"
-              type="text"
-              class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-              id="exampleText0"
-              placeholder="Project Description"
-            ></textarea>
-          </div>
-        </div>
-
-        <hr
-          class="w-full h-1 mx-auto my-4 bg-gray-200 border-0 rounded md:my-10 dark:bg-gray-700"
-        />
-
-        <div>
-          <div class="mb-3">
-            <input
-              formControlName="projectTitle1"
-              type="text"
-              class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-              id="exampleText0"
-              placeholder="Project Title"
-            />
-          </div>
-          <div class="mb-3">
-            <input
-              formControlName="demovideo1"
-              type="text"
-              class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-              id="exampleText0"
-              placeholder="Demo video URL"
-            />
-          </div>
-
-          <div class="my-3">
-            <textarea
-              formControlName="projectDescription1"
-              type="text"
-              class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-              id="exampleText0"
-              placeholder="Project Description"
-            ></textarea>
-          </div>
-        </div>
-
-        <hr
-          class="w-full h-1 mx-auto my-4 bg-gray-200 border-0 rounded md:my-10 dark:bg-gray-700"
-        />
-      </div>
+      <app-projects-dashboard></app-projects-dashboard>
     </div>
-  </form>
+  </div>
 </div>

@@ -4,8 +4,8 @@ const getUserProjects = async (req, res, next) => {
   try {
     const userProjects = await GithubProjects.findOne({
       profileId: req.currentUser.profileId,
-    }).select('githubProjects');
-    res.status(200).send(userProjects);
+    });
+    res.status(200).send(userProjects.githubProjects);
   } catch (error) {
     console.log(error);
     res.status(500).send({ error, message: 'Something went wrong' });

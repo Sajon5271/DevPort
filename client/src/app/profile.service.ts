@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { profile } from './interfaces/profile';
+import { GithubRepo } from './interfaces/github-repo';
+import { GitProjectSaved } from './interfaces/local_github_projects_interface';
 
 @Injectable({
   providedIn: 'root',
@@ -45,6 +47,10 @@ export class ProfileService {
   get authToken() {
     return localStorage.getItem('accessToken');
   }
+
+  get gitAccessToken() {
+    return localStorage.getItem('githubAccessToken');
+  }
   updateLocalProfileData(cb?: () => void) {
     const profileID = localStorage.getItem('profileId') || '';
     if (profileID)
@@ -54,5 +60,40 @@ export class ProfileService {
           localStorage.setItem('profileData', JSON.stringify(res));
           if (cb) cb();
         });
+  }
+  getGitHubRepos(): Observable<GithubRepo[]> {
+    return this.http.get<GithubRepo[]>('https://api.github.com/user/repos', {
+      headers: {
+        Authorization: `Bearer ${this.gitAccessToken}`,
+      },
+    });
+  }
+
+  getGithubColor(): Observable<any> {
+    return this.http.get('assets/git-colors.json');
+  }
+
+  getUserSelectedProjectsGithub(): Observable<GitProjectSaved[]> {
+    return this.http.get<GitProjectSaved[]>(
+      'http://localhost:3000/githubProjects',
+      {
+        headers: {
+          Authorization: `Bearer ${this.authToken}`,
+        },
+      }
+    );
+  }
+  updateUserSelectedProjectsGithub(
+    repos: GitProjectSaved[]
+  ): Observable<GitProjectSaved[]> {
+    return this.http.put<GitProjectSaved[]>(
+      'http://localhost:3000/updateGithubProjects',
+      repos,
+      {
+        headers: {
+          Authorization: `Bearer ${this.authToken}`,
+        },
+      }
+    );
   }
 }

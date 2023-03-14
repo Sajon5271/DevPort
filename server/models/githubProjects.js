@@ -1,5 +1,12 @@
 const mongoose = require('mongoose');
 
+const projectsSchema = new mongoose.Schema({
+  name: String,
+  html_url: String,
+  forks_count: Number,
+  stargazers_count: Number,
+  language: String,
+});
 const githubProjectSchema = new mongoose.Schema({
   profileId: {
     type: String,
@@ -8,14 +15,6 @@ const githubProjectSchema = new mongoose.Schema({
   githubProjects: {
     type: [projectsSchema],
   },
-});
-
-const projectsSchema = new mongoose.Schema({
-  name: String,
-  url: String,
-  totalForks: Number,
-  totalStars: Number,
-  mainLanguage: String,
 });
 
 module.exports = mongoose.model('GithubProject', githubProjectSchema);
