@@ -13,12 +13,16 @@ const basicInfoSchema = new mongoose.Schema({
   pphoto: String,
   skillsData: { type: [String], default: [] },
 });
+const accessCodesSchema = new mongoose.Schema({
+  github: String,
+  linkedIn: String,
+});
 
 const userAccInfoSchema = new mongoose.Schema({
-  githubLink: String,
-  soLink: String,
-  leetcodeLink: String,
-  linkedInLink: String,
+  githubLink: { type: String, default: 'null' },
+  soLink: { type: String, default: 'null' },
+  leetcodeLink: { type: String, default: 'null' },
+  linkedInLink: { type: String, default: 'null' },
 });
 
 const educationSchema = new mongoose.Schema({
@@ -45,6 +49,7 @@ const profileSchema = new mongoose.Schema({
   education: [educationSchema],
   experiences: [experienceSchema],
   projects: [projectSchema],
+  accessCodes: accessCodesSchema,
 });
 
 const Profile = mongoose.model('Profile', profileSchema);

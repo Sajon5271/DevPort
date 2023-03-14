@@ -2,7 +2,7 @@ const Profile = require('../models/profile');
 
 async function getAllProfiles(req, res) {
   try {
-    const profiles = await Profile.find();
+    const profiles = await Profile.find().select('-accessCodes');
     res.status(200);
     res.send(profiles);
   } catch (error) {
@@ -15,7 +15,7 @@ async function getAllProfiles(req, res) {
 async function getSingleProfile(req, res) {
   try {
     const { id } = req.params;
-    const profile = await Profile.findById(id);
+    const profile = await Profile.findById(id).select('-accessCodes');
     res.status(200);
     res.send(profile);
   } catch (error) {
@@ -52,7 +52,7 @@ async function getAllSkills(req, res) {
       })
       .unwind('skillsData')
       .group({ _id: 'S', allSkills: { $push: '$skillsData' } });
-    const skillList = allSkillsArray[0].allSkills;
+    const skillList = allSkillsArray[0] ? allSkillsArray[0].allSkills : [];
     const counts = {};
     for (let i = 0; i < skillList.length; i++) {
       counts[skillList[i].toLowerCase().trim()] =
@@ -70,9 +70,12 @@ async function getAllSkills(req, res) {
   }
 }
 
+async function getAllTokens() {}
+
 module.exports = {
   getAllProfiles,
   updateProfile,
   getSingleProfile,
   getAllSkills,
+  getAllTokens,
 };
