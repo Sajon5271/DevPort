@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 import { AppComponent } from './app.component';
@@ -26,6 +26,8 @@ import { WebViewComponentsComponent } from './components/web-view-components/web
 import { CustombuttonComponent } from './components/custombutton/custombutton.component';
 import { GithubLoginComponent } from './github-login/github-login.component';
 import { LinkedInLoginComponent } from './linked-in-login/linked-in-login.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
+import { LoadingInterceptor } from './loading.interceptor';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,7 @@ import { LinkedInLoginComponent } from './linked-in-login/linked-in-login.compon
     CustombuttonComponent,
     GithubLoginComponent,
     LinkedInLoginComponent,
+    SpinnerComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,6 +64,11 @@ import { LinkedInLoginComponent } from './linked-in-login/linked-in-login.compon
   providers: [
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })
