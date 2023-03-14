@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { profile } from './interfaces/profile';
 import { GithubRepo } from './interfaces/github-repo';
 import { GitProjectSaved } from './interfaces/local_github_projects_interface';
+import { GithubUserData } from './interfaces/githubdata';
 
 @Injectable({
   providedIn: 'root',
@@ -63,6 +64,13 @@ export class ProfileService {
   }
   getGitHubRepos(): Observable<GithubRepo[]> {
     return this.http.get<GithubRepo[]>('https://api.github.com/user/repos', {
+      headers: {
+        Authorization: `Bearer ${this.gitAccessToken}`,
+      },
+    });
+  }
+  getGitHubProfile(): Observable<GithubUserData> {
+    return this.http.get<GithubUserData>('https://api.github.com/user', {
       headers: {
         Authorization: `Bearer ${this.gitAccessToken}`,
       },

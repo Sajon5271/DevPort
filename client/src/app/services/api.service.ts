@@ -5,7 +5,7 @@ import { leetcode } from '../interfaces/leetcode';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { signin } from '../interfaces/signin';
-import { githubdata } from '../interfaces/githubdata';
+import { GithubUserData } from '../interfaces/githubdata';
 
 @Injectable({
   providedIn: 'root',
@@ -37,7 +37,7 @@ export class ApiService {
     return this.http.get<leetcode>(`${this.leetcodeURL}/${username}`);
   }
   getImage(username: string) {
-    return this.http.get<githubdata>(`${this.githubURL}${username}`);
+    return this.http.get<GithubUserData>(`${this.githubURL}${username}`);
   }
 
   getAllSkills(): Observable<{ skill: string; count: number }[]> {

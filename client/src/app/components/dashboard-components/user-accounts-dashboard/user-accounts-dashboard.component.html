@@ -1,27 +1,16 @@
-<div [formGroup]="userAccounts" class="self-center pt-10 pl-12">
-  <h2 class="underline">User Account Info</h2>
-  <div class="mb-3 xl:w-5/12">
-    <input
-      formControlName="githubLink"
-      type="text"
-      class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-      placeholder="Github Profile Name"
-    />
+<div class="self-center pt-10 pl-12">
+  <h1 class="p-4 name">Your Accounts</h1>
+  <div class="accountCard">
+    <div class="cardTitle">Github</div>
+    <img class="proPic" [src]="gitHubUserData.avatar_url" />
+    <div class="p-2 topInfo">
+      <div class="name">{{ gitHubUserData.name }}</div>
+      <div>Joined {{ githubJoined }}</div>
+    </div>
+    <div class="bottomInfo">
+      <div>{{ gitHubUserData.email }}</div>
+      <div>{{ gitHubUserData.followers }} followers</div>
+    </div>
   </div>
-  <div class="mb-3 xl:w-5/12">
-    <input
-      formControlName="soLink"
-      type="text"
-      class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-      placeholder="Stack Overflow Profile Name"
-    />
-  </div>
-  <div class="mb-3 xl:w-5/12">
-    <input
-      formControlName="leetcodeLink"
-      type="text"
-      class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-      placeholder="Leetcode Profile Name"
-    />
-  </div>
+  <!-- <h2 class="pl-5">Github</h2> -->
 </div>
