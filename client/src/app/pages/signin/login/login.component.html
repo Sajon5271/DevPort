@@ -16,6 +16,7 @@
         </div>
         <div
           *ngIf="errorMsg"
+          data-test="error"
           class="mb-8 text-2l text-center font-light text-red-600"
         >
           {{ errorMsg }}
@@ -24,6 +25,7 @@
           <!-- Email input -->
           <div class="mb-6">
             <input
+              data-test="loginEmail"
               formControlName="email"
               type="text"
               class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-600 focus:outline-none"
@@ -34,6 +36,7 @@
           <!-- Password input -->
           <div class="mb-6">
             <input
+              data-test="loginPassword"
               formControlName="password"
               type="password"
               class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-600 focus:outline-none"
@@ -43,26 +46,16 @@
 
           <div class="flex justify-center items-center mb-6">
             <a
+              data-test="newAccount"
               class="text-teal-600 hover:text-teal-600 focus:text-teal-600 active:text-teal-600 duration-200 transition ease-in-out"
               routerLink="/signup"
               >Don't have an account?</a
             >
           </div>
-          <button
-            class="inline-block m-4 px-7 py-3 bg-teal-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-teal-600 hover:shadow-lg focus:bg-teal-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-teal-600 active:shadow-lg transition duration-150 ease-in-out w-full"
-            (click)="githubLogin()"
-          >
-            Login with github
-          </button>
-          <button
-            class="inline-block m-4 px-7 py-3 bg-teal-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-teal-600 hover:shadow-lg focus:bg-teal-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-teal-600 active:shadow-lg transition duration-150 ease-in-out w-full"
-            (click)="linkedInLogin()"
-          >
-            Login with Linked In
-          </button>
 
           <!-- Submit button -->
           <button
+            data-test="loginButton"
             type="submit"
             [disabled]="!loginForm.valid"
             (click)="handleSubmit()"
@@ -71,6 +64,18 @@
             data-mdb-ripple-color="light"
           >
             Log in
+          </button>
+          <button
+            class="inline-block m-4 px-7 py-3 bg-teal-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-teal-600 hover:shadow-lg focus:bg-teal-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-teal-600 active:shadow-lg transition duration-150 ease-in-out w-full"
+            (click)="githubLogin()"
+          >
+            Login with github
+          </button>
+          <button
+            class="inline-block w-50 m-4 px-7 py-3 bg-teal-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-teal-600 hover:shadow-lg focus:bg-teal-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-teal-600 active:shadow-lg transition duration-150 ease-in-out w-full"
+            (click)="linkedInLogin()"
+          >
+            Login with Linked In
           </button>
         </form>
       </div>

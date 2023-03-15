@@ -43,6 +43,7 @@ export class LoginComponent {
           localStorage.setItem('accessToken', res.accessToken);
           localStorage.setItem('profileId', res.profileId);
           this.profile.updateLocalProfileData(() => {
+            this.profile.refreshLocalAccessTokens();
             this.routerJump.navigate([`/dashboard`]);
           });
         },

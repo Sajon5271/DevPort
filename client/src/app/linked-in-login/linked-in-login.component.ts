@@ -32,11 +32,11 @@ export class LinkedInLoginComponent {
           .linkedInOauthGetAccessCode(params['code'])
           .subscribe((res) => {
             localStorage.setItem('linkedInAccessToken', res.access_token);
-            console.log(res);
             this.authService.oauthLoginLinkedIn().subscribe((res: any) => {
               localStorage.setItem('accessToken', res.accessToken);
               localStorage.setItem('profileId', res.profileId);
               this.profile.updateLocalProfileData(() => {
+                this.profile.refreshLocalAccessTokens();
                 this.router.navigate([`/dashboard`]);
               });
             });

@@ -81,9 +81,11 @@ export class ProfileService {
     return this.http.get('assets/git-colors.json');
   }
 
-  getUserSelectedProjectsGithub(profileId: string): Observable<GitProjectSaved[]> {
+  getUserSelectedProjectsGithub(
+    profileId: string
+  ): Observable<GitProjectSaved[]> {
     return this.http.get<GitProjectSaved[]>(
-      'http://localhost:3000/githubProjects/'+profileId
+      'http://localhost:3000/githubProjects/' + profileId
     );
   }
   updateUserSelectedProjectsGithub(
@@ -98,5 +100,19 @@ export class ProfileService {
         },
       }
     );
+  }
+
+  refreshLocalAccessTokens() {
+    this.http
+      .get('http://localhost:3000/allAccessToken', {
+        headers: {
+          Authorization: `Bearer ${this.authToken}`,
+        },
+      })
+      .subscribe((res: any) => {
+        if (res.github) localStorage.setItem('githubAccessToken', res.github);
+        if (res.linkedIn)
+          localStorage.setItem('linkedInAccessToken', res.linkedIn);
+      });
   }
 }

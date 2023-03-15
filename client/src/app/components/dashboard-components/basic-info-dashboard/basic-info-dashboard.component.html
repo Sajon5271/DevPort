@@ -2,6 +2,7 @@
   <h2 class="underline">Basic Info</h2>
   <div class="mb-3 xl:w-5/12">
     <input
+      data-test="userFullName"
       formControlName="fullname"
       type="text"
       class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
@@ -12,6 +13,7 @@
 
   <div class="mb-3 xl:w-5/12">
     <input
+      data-test="userJobTitle"
       formControlName="jobTitle"
       type="text"
       class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
@@ -21,6 +23,7 @@
   </div>
   <div class="mb-3 xl:w-5/12">
     <input
+      data-test="userEmail"
       formControlName="email"
       type="email"
       class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-gray-200 bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
@@ -47,6 +50,7 @@
 
   <div class="mb-3 xl:w-5/12">
     <textarea
+      data-test="userCareerObj"
       formControlName="careerObj"
       class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
       rows="3"
@@ -54,16 +58,18 @@
     ></textarea>
   </div>
 
-  <div>
+  <div class="mb-3 xl:w-5/12">
     <span>
       <input
-        class="form-control block w-25 px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+        data-test="userSkills"
+        class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
         rows="3"
         placeholder="Your Skills (Separate by comma for multiple)"
         [(ngModel)]="skillListStr"
         [ngModelOptions]="{ standalone: true }"
       />
       <button
+        data-test="btnAddSkill"
         class="btn text-white bg-teal-600 p-2 mt-4 mb-4 rounded-sm"
         (click)="updateSkillList()"
       >
@@ -76,6 +82,7 @@
         *ngFor="let skill of skillList; let perSkill = index"
       >
         <div
+          data-test="userSingleSkill"
           (click)="onRemoveSkill(skill)"
           class="px-2 py-1.5 mb-2 rounded-md text-teal-600 bg-white border-teal-600 border font-semibold text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease"
         >

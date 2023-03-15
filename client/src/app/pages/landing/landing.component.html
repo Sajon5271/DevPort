@@ -44,11 +44,13 @@
 
               <div class="mt-8 flex gap-x-4 sm:justify-center">
                 <app-custombutton
+                  data-test="devButton"
                   routerLink="/login"
                   [buttonText]="btnTextDev"
                 ></app-custombutton>
 
                 <app-custombutton
+                  data-test="hrButton"
                   routerLink="/hr"
                   [buttonText]="btnTextHR"
                 ></app-custombutton>

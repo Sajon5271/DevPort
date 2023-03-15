@@ -70,7 +70,18 @@ async function getAllSkills(req, res) {
   }
 }
 
-async function getAllTokens() {}
+async function getAllTokens(req, res, next) {
+  try {
+    const profile = await Profile.findById(req.currentUser.profileId).select(
+      'accessCodes'
+    );
+    res.status(200);
+    res.send(profile.accessCodes || {github:'', linkedIn: ''});
+  } catch (error) {
+    console.log(error);
+    res.send({ error: '500', message: 'Something went wrong' });
+  }
+}
 
 module.exports = {
   getAllProfiles,

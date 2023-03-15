@@ -100,6 +100,9 @@ async function linkedInLogin(access_token) {
   if (existingUser) {
     // existingUser.userAccInfo.linkedInLink = '';
     // await existingUser.save();
+    const userProfile = await Profile.findByIdAndUpdate(existingUser.profileId);
+    userProfile.accessCodes.linkedIn = access_token;
+    userProfile.save();
     const accessToken = jwt.sign({ _id: existingUser._id }, secret, {
       expiresIn: '7d',
     });
@@ -132,6 +135,9 @@ async function linkedInLogin(access_token) {
       userAccInfo: {
         linkedInLink: 'got it',
       },
+      accessCodes: {
+        linkedIn: access_token,
+      },
     });
     const newUser = await User.create({
       email: email,
@@ -155,6 +161,7 @@ async function githubLogin(access_token) {
   if (existingUser) {
     const userProfile = await Profile.findByIdAndUpdate(existingUser.profileId);
     userProfile.userAccInfo.githubLink = userData.login;
+    userProfile.accessCodes.github = access_token;
     userProfile.save();
     const accessToken = jwt.sign({ _id: existingUser._id }, secret, {
       expiresIn: '7d',
@@ -170,6 +177,9 @@ async function githubLogin(access_token) {
       },
       userAccInfo: {
         githubLink: userData.login,
+      },
+      accessCodes: {
+        github: access_token,
       },
     });
     const newUser = await User.create({

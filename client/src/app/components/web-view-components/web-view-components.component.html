@@ -36,7 +36,10 @@
         <img src="{{ gitContribution }}" alt="Name Your Github chart" />
       </article>
 
-      <div *ngIf="profileInfo.userAccInfo.leetcodeLink" class="w-full flex">
+      <div
+        *ngIf="profileInfo.userAccInfo.leetcodeLink !== 'null'"
+        class="w-full flex"
+      >
         <div
           class="flex-col p-6 border mt-4 rounded shadow-lg bg-white w-full content-center"
         >
